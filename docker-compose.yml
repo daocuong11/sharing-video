@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: sharing-video-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    ports:
+      - 27017:27017
+    networks:
+      - app-tier
+    volumes:
+      - mongo-data:/data/db
+      - mongo-config:/etc/mongo/mongod.conf
+  sharing-video-api:
+    depends_on:
+      - mongodb
+    build:
+      context: ./sharing-video-api
+      dockerfile: Dockerfile
+    image: sharing-video-api
+    container_name: sharing-video-api
+    # env_file:
+    #   - ./sharing-video-api/.env.example
+    ports:
+      - "3001:3001"
+    networks:
+      - app-tier
+    environment:
+      MONGO_HOST: mongodb:27017
+volumes:
+  mongo-data:
+    driver: local
+  mongo-config:
+    driver: local
+networks:
+  app-tier:
+    driver: bridge
