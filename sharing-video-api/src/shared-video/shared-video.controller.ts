@@ -13,6 +13,7 @@ export class SharedVideoController {
     @UseGuards(AuthGuard)
     @Post()
     sharingVideo(@Body() shareVideoDto: ShareVideoDTO, @Request() req) {
+
         const shareVideo: SharedVideo = {
             title: shareVideoDto.title,
             link: shareVideoDto.link,

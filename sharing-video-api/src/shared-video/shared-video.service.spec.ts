@@ -1,3 +1,4 @@
+import { BullModule, getQueueToken } from '@nestjs/bull';
 import { getModelToken, MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
@@ -11,7 +12,16 @@ describe('SharedVideoService - Integration Test', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         MongooseModule.forRoot('mongodb://root:123456@localhost:27017/sharing-video?authSource=admin&readPreference=primary'),
-        MongooseModule.forFeature([{ name: SharedVideo.name, schema: SharedVideoSchema }])
+        MongooseModule.forFeature([{ name: SharedVideo.name, schema: SharedVideoSchema }]),
+        BullModule.forRoot({
+          redis: {
+            host: 'localhost',
+            port: 6379,
+          },
+        }),
+        BullModule.registerQueue({
+          name: 'sharing-video-queue'
+        }), 
       ],
       providers: [SharedVideoService],
     }).compile();
@@ -54,6 +64,10 @@ describe('SharedVideoService - Unit Test', () => {
     find: jest.fn(() => mockedModel),
     findOneAndUpdate: jest.fn(() => mockedModel)
   };
+  const mockQueue: any = { 
+    add: jest.fn(),
+    process: jest.fn(),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -62,6 +76,10 @@ describe('SharedVideoService - Unit Test', () => {
         {
           provide: getModelToken(SharedVideo.name),
           useValue: mockedModel
+        },
+        {
+          provide: getQueueToken('sharing-video-queue'),
+          useValue: mockQueue
         }
       ],
     }).compile();
