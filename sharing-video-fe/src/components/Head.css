@@ -1,0 +1,28 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 130px;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+}
+
+.frm-login {
+    padding: 10px;
+    display: flex;
+}
+
+.frm-login input,
+button {
+    margin: 5px;
+    height: 25px;
+}
+
+@media screen and (max-width: 560px) {
+    .frm-login {
+        flex-direction: column;
+    }
+}

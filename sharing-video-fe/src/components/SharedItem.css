@@ -1,0 +1,12 @@
+.item {
+    display: flex;
+}
+
+@media screen and (max-width: 560px) {
+    .item {
+        flex-direction: column;
+    }
+    .description {
+        padding-left: 20px;
+    }
+}
