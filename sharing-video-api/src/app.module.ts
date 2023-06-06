@@ -9,7 +9,7 @@ import { SharedVideoModule } from './shared-video/shared-video.module';
 @Module({
   imports: [
     AuthModule, 
-    MongooseModule.forRoot('mongodb://root:123456@localhost:27017/sharing-video?authSource=admin&readPreference=primary'), 
+    MongooseModule.forRoot('mongodb://root:123456@mongodb:27017/sharing-video?authSource=admin&readPreference=primary'), 
     SharedVideoModule,
     BullModule.forRoot({
       redis: {
