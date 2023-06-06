@@ -1,6 +1,15 @@
 Introduction:
     Website for sharing the url link of members.
 
+    Register user 
+    ![Screenshot](register.png)
+
+    List shared videos
+    ![Screenshot](unregister.png)
+
+    Share video and notification
+    ![Screenshot](share-video.png)
+
     Version control: 
         - Git
 
@@ -31,18 +40,18 @@ Installation & Configuration:
         BE: go to directory sharning-video-api/app.module.ts and change mongodb, redis connection
         FE: change the root url in App.tsx, socket.ts, Head.tsx, RegisterPopup and SharedPopup 
 
-Database Setup:.
+Database Setup:
     - I used the mongodb to help easier to skip the migration 
 
 Running the Application: 
     How to start the development server 
         docker
-            go to directory sharning-video and run command "docker-compose up"
+           - go to directory sharning-video and run command "docker-compose up"
 
         without docker 
-            run redis 
-            run mongodb
-            go to directory sharning-video-api and run command "npm start"
+           - run redis 
+           - run mongodb
+           - go to directory sharning-video-api and run command "npm start"
 
         
     How access the application in a web browser
